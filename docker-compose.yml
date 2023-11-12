@@ -1,0 +1,22 @@
+version: '3'
+services:
+  lms-frontend:
+    build:
+      context: ./LMS Angular
+      dockerfile: Dockerfile
+    ports:
+      - "4200:82"
+    depends_on:
+      - lms-backend
+    network_mode: "host"
+
+
+  lms-backend:
+    build:
+      context: ./LMS Server
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    network_mode: "host"
+
+
