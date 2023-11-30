@@ -7,7 +7,7 @@ require("dotenv").config();
 app.use(express.json());
 mongoose.connect(
   process.env.DB_CONNECTION,
-  { useNewUrlParser: true, useUnifiedTopology: true },
+  { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS:20000 },
   () => {
     console.log("Connected");
   }
@@ -22,7 +22,11 @@ const librarianRoute = require("./routes/librarian.route");
 const bookRoute = require("./routes/book.route");
 const issueBookRoute = require("./routes/issuebook.route");
 
-app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
+
+const corsOrigins = process.env.CORS_ORIGINS.split(',');
+
+app.use(cors({ credentials: true, origin: corsOrigins }));
+
 app.use("/api/usersauth/", userauthRoute);
 app.use("/api/adminsauth/", adminauthRoute);
 app.use("/api/users/", userRoute);
